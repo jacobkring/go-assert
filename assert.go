@@ -45,6 +45,7 @@ func Equal(t *testing.T, exp, act interface{}) {
 	}
 }
 
+// Panic fails the test if the code does not panic
 func Panic(t *testing.T) {
 	if r := recover(); r == nil {
 		t.Errorf("The code did not panic")
