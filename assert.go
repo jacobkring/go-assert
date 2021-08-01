@@ -2,7 +2,7 @@
 package assert
 
 import (
-	"fmt"
+	"log"
 	"path/filepath"
 	"reflect"
 	"runtime"
@@ -13,7 +13,7 @@ import (
 func Condition(t *testing.T, condition bool, msg string, v ...interface{}) {
 	if !condition {
 		_, file, line, _ := runtime.Caller(1)
-		fmt.Printf("\n\033[31m%s:%d: "+msg+"\033[39m\n↓\n", append([]interface{}{filepath.Base(file), line}, v...)...)
+		log.Printf("\n\033[31m%s:%d: "+msg+"\033[39m\n↓\n", append([]interface{}{filepath.Base(file), line}, v...)...)
 		t.FailNow()
 	}
 }
@@ -22,7 +22,7 @@ func Condition(t *testing.T, condition bool, msg string, v ...interface{}) {
 func Nil(t *testing.T, err error) {
 	if err != nil {
 		_, file, line, _ := runtime.Caller(1)
-		fmt.Printf("\n\033[31m%s:%d: unexpected error: %s\033[39m\n↓\n", filepath.Base(file), line, err.Error())
+		log.Printf("\n\033[31m%s:%d: unexpected error: %s\033[39m\n↓\n", filepath.Base(file), line, err.Error())
 		t.FailNow()
 	}
 }
@@ -31,7 +31,7 @@ func Nil(t *testing.T, err error) {
 func NotNil(t *testing.T, err error) {
 	if err == nil {
 		_, file, line, _ := runtime.Caller(1)
-		fmt.Printf("\n\033[31m%s:%d: expected error but got nil\033[39m\n↓\n", filepath.Base(file), line)
+		log.Printf("\n\033[31m%s:%d: expected error but got nil\033[39m\n↓\n", filepath.Base(file), line)
 		t.FailNow()
 	}
 }
@@ -40,7 +40,7 @@ func NotNil(t *testing.T, err error) {
 func Equal(t *testing.T, exp, act interface{}) {
 	if !reflect.DeepEqual(exp, act) {
 		_, file, line, _ := runtime.Caller(1)
-		fmt.Printf("\n\033[31m%s:%d: \n\texp: %#v\n\n\tgot: %#v\033[39m\n↓\n", filepath.Base(file), line, exp, act)
+		log.Printf("\n\033[31m%s:%d: \n\texp: %#v\n\n\tgot: %#v\033[39m\n↓\n", filepath.Base(file), line, exp, act)
 		t.FailNow()
 	}
 }
